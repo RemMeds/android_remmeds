@@ -6,13 +6,18 @@ android:
   - build-tools-27.0.3
   - android-27
   - extra
-script:
-- "./gradlew test"
-- "./gradlew lint"
-- "./gradlew sonarqube \
-       -Dsonar.host.url=https://sonarcloud.io \
-       -Dsonar.organization=remmeds \
-       -Dsonar.login=71a0474c2d6a00ad268e14a1419ffd5ea04f720b"
+jobs:
+  include:
+    - stage: Unit Test
+      script: ./gradlew test
+    - stage: Linter
+      script: ./gradlew lint
+    - stage: Sonarcloud Job
+      script: ./gradlew sonarqube \
+                  -Dsonar.host.url=https://sonarcloud.io \
+                  -Dsonar.organization=remmeds \
+                  -Dsonar.login=71a0474c2d6a00ad268e14a1419ffd5ea04f720b
+
 
 before_install:
 - chmod +x gradlew
