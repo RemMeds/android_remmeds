@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.com/RemMeds/projet_remmeds.svg?branch=master)](https://travis-ci.com/RemMeds/projet_remmeds)
-[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=projet_remmeds&metric=alert_status)](https://sonarcloud.io/dashboard?id=projet_remmeds)
+[![Build Status](https://travis-ci.com/RemMeds/android_remmeds.svg?branch=master)](https://travis-ci.com/RemMeds/android_remmeds)
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=android_remmeds&metric=alert_status)](https://sonarcloud.io/dashboard?id=android_remmeds)
 
 # Projet Remmeds
 
