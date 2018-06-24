@@ -49,7 +49,6 @@ public class FragmentRepertoire extends Fragment {
             }
         });
 
-
         try {
             mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         } catch (Exception e) {

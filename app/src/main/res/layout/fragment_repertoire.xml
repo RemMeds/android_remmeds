@@ -40,7 +40,6 @@
         android:layout_height="31dp"
         android:background="@drawable/bouton_arrondi"
         android:text="@string/supprimer_button_layout_repertoire"
-        android:onClick="buttonClick"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintLeft_toLeftOf="parent"

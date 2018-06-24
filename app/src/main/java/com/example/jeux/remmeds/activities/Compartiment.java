@@ -3,12 +3,8 @@ package com.example.jeux.remmeds.activities;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Switch;
-import android.widget.TextView;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Toast;
 import android.widget.Button;
-import android.content.Intent;
 import android.view.View;
 
 import com.example.jeux.remmeds.R;
