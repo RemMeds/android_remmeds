@@ -1,82 +1,44 @@
 package com.example.jeux.remmeds.classes;
 
-import com.example.jeux.remmeds.fragments.FragmentAccueil;
-
 public class Prise {
     private String nommedicament;
     private int compartiment;
     private String heurePrise;
-    private String dayperso;
-    private String listpref;
-    private String durationtext;
-    private String durationnumber;
-    private String heureperso;
     private String datePrise;
+    private String isTaken;
+    private String plageHorraire;
 
-    public Prise(String nomMedicament, int compartiment, String heurePrise){
+    public Prise(String nomMedicament, int compartiment, String heurePrise, String isTaken){
         this.nommedicament = nomMedicament;
         this.compartiment = compartiment;
         this.heurePrise = heurePrise;
     }
 
-    public Prise(String nomMedicament, int compartiment, String heurePrise, String datePrise){
+    public Prise(String nomMedicament, int compartiment, String heurePrise, String datePrise, String plageHorraire, String isTaken){
         this.nommedicament = nomMedicament;
         this.compartiment = compartiment;
         this.heurePrise = heurePrise;
         this.datePrise = datePrise;
+        this.plageHorraire = plageHorraire;
+        this.isTaken = isTaken;
     }
 
 
-    public Prise() {
-
+    public String getPlageHorraire() {
+        return plageHorraire;
     }
 
-    public void setDatePrise(String datePrise) {
-        this.datePrise = datePrise;
+    public String getIsTaken() {
+
+        return isTaken;
+    }
+
+    public void setIsTaken(String isTaken) {
+        this.isTaken = isTaken;
     }
 
     public String getDatePrise() {
         return datePrise;
-    }
-
-    public void setDayperso(String dayperso) {
-        this.dayperso = dayperso;
-    }
-
-    public void setListpref(String listpref) {
-        this.listpref = listpref;
-    }
-
-    public void setDurationtext(String durationtext) {
-        this.durationtext = durationtext;
-    }
-
-    public void setDurationnumber(String durationnumber) {
-        this.durationnumber = durationnumber;
-    }
-
-    public void setHeureperso(String heureperso) {
-        this.heureperso = heureperso;
-    }
-
-    public String getDayperso() {
-        return dayperso;
-    }
-
-    public String getListpref() {
-        return listpref;
-    }
-
-    public String getDurationtext() {
-        return durationtext;
-    }
-
-    public String getDurationnumber() {
-        return durationnumber;
-    }
-
-    public String getHeureperso() {
-        return heureperso;
     }
 
     public String getNommedicament() {
@@ -91,15 +53,4 @@ public class Prise {
         return heurePrise;
     }
 
-    public void setNommedicament(String nommedicament) {
-        this.nommedicament = nommedicament;
-    }
-
-    public void setCompartiment(int compartiment) {
-        this.compartiment = compartiment;
-    }
-
-    public void setHeurePrise(String heurePrise) {
-        this.heurePrise = heurePrise;
-    }
 }

@@ -22,13 +22,24 @@
 
     <TextView
         android:id="@+id/historique_recycler_nomMedicament"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:textSize="16sp"
         android:textStyle="bold"
         android:layout_marginStart="15dp"
         android:layout_marginLeft="15dp"
-        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/historique_recycler_compartiment"
+        android:layout_toRightOf="@id/historique_recycler_compartiment"/>
+
+    <TextView
+        android:id="@+id/historique_plage_horraire"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rep_recycler_nom"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:layout_toEndOf="@id/historique_recycler_compartiment"
         android:layout_toRightOf="@id/historique_recycler_compartiment"
         />

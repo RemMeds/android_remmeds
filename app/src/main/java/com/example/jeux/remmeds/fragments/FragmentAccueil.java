@@ -24,6 +24,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -69,8 +70,8 @@ public class FragmentAccueil extends Fragment {
             JSONObject data = MainActivity.getDoInBackground("http://212.73.217.202:15020/compartment/list_com/" + MainActivity.getUserID());
             try {
                 final Profil p = new Profil();
-                JSONArray array = data.getJSONArray("compartment");
-                generatePrises(array, p);
+                JSONArray compartmentArray = data.getJSONArray("compartment");
+                generatePrises(compartmentArray, p);
                 refreshRecyclerAccueil();
             } catch (java.lang.NullPointerException e) {
                 Log.e("NullJson", "Accueil" + e);
@@ -81,8 +82,41 @@ public class FragmentAccueil extends Fragment {
         }
     }
 
-    private void generatePrises(JSONArray array, Profil profil) {
-        JSONObject object;
+//    private static void checkHistory(Prise prise) {
+//        JSONObject objectHistory;
+//        JSONArray arrayHistorique = null;
+//        Profil p = new Profil();
+//
+//        try {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+//            Date currentDay = dateFormat.parse(dateFormat.format(new Date()));
+//            Date endTimeRef = dateFormat.parse(prise.getHeurePrise());
+//            arrayHistorique = historiqueData.getJSONArray("historic");
+//            for (int i = 0; i < arrayHistorique.length(); i++) {
+//                objectHistory = arrayHistorique.getJSONObject(i);
+//                if (prise.getNommedicament().equals(objectHistory.getString("drug_name")) && dateFormat.parse(dateFormat.format(new Date())).equals(currentDay)) {
+//                    if (p.getBreakfastHour().equals(objectHistory.getString("time_slot"))) {
+//                        prise.setIsTaken("1");
+//                    } else if (p.getLunchHour().equals(objectHistory.getString("time_slot"))) {
+//                        prise.setIsTaken("1");
+//                    } else if (p.getDinnerHour().equals(objectHistory.getString("time_slot"))) {
+//                        prise.setIsTaken("1");
+//                    } else if (p.getBedHour().equals(objectHistory.getString("time_slot"))) {
+//                        prise.setIsTaken("1");
+//                    }
+//
+//                }
+//            }
+//        } catch (JSONException e) {
+//            Log.e("JSON EXCEPTION CATCHED", "AccueilCheck" + e);
+//        } catch (ParseException e) {
+//            Log.e("Exception catched", "AccueilCheck" + e);
+//        }
+//    }
+
+
+    private void generatePrises(JSONArray compartement, Profil profil) {
+        JSONObject objectCompartement;
 
         Calendar calendar = Calendar.getInstance();
         Date date = calendar.getTime();
@@ -91,12 +125,12 @@ public class FragmentAccueil extends Fragment {
         dayname = dayname.substring(0, 1).toUpperCase() + dayname.substring(1);
         for (int i = 0; i < 8; i++) {
             try {
-                object = array.getJSONObject(i);
-                String nommedicament = object.getString("drug_name");
-                String dayperso = object.getString("days");
-                String listpref = object.getString("list_pref");
-                String heureperso = object.getString("perso_hour");
-                int compnum = Integer.parseInt(object.getString("compartment_num"));
+                objectCompartement = compartement.getJSONObject(i);
+                String nommedicament = objectCompartement.getString("drug_name");
+                String dayperso = objectCompartement.getString("days");
+                String listpref = objectCompartement.getString("list_pref");
+                String heureperso = objectCompartement.getString("perso_hour");
+                int compnum = Integer.parseInt(objectCompartement.getString("compartment_num"));
                 int comp[] = {R.drawable.comp1, R.drawable.comp2, R.drawable.comp3, R.drawable.comp4, R.drawable.comp5, R.drawable.comp6, R.drawable.comp7, R.drawable.comp8};
 
                 String[] days = dayperso.split(",");
@@ -109,19 +143,19 @@ public class FragmentAccueil extends Fragment {
                         for (String pref : prefs) {
                             switch (pref) {
                                 case "Breakfast":
-                                    Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour());
+                                    Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour(), "0");
                                     addPrise(prise0);
                                     break;
                                 case "Lunch":
-                                    Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour());
+                                    Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour(), "0");
                                     addPrise(prise1);
                                     break;
                                 case "Dinner":
-                                    Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour());
+                                    Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour(), "0");
                                     addPrise(prise2);
                                     break;
                                 case "Bedtime":
-                                    Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour());
+                                    Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour(), "0");
                                     addPrise(prise3);
                                     break;
                                 default:
@@ -132,7 +166,7 @@ public class FragmentAccueil extends Fragment {
                     j++;
                 }
                 if (!heureperso.equals("") && !heureperso.equals("0")) {
-                    Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso);
+                    Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso, "0");
                     addPrise(prise4);
                 }
                 sortPriseListe();
@@ -163,7 +197,7 @@ public class FragmentAccueil extends Fragment {
         priseListe.add(prise);
     }
 
-    public static Context getAccueilContext(){
+    public static Context getAccueilContext() {
         return mContext;
     }
 
@@ -174,4 +208,10 @@ public class FragmentAccueil extends Fragment {
         }
     }
 
+    private static Date addMinutes(int minutes, Date beforeTime) {
+        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
+        long curTimeInMs = beforeTime.getTime();
+        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
+        return afterAddingMins;
+    }
 }
