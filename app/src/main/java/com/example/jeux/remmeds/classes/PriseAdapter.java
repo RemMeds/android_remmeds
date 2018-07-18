@@ -68,6 +68,8 @@ public class PriseAdapter extends RecyclerView.Adapter<PriseAdapter.MyViewHolder
 
         } catch (ParseException e) {
             Log.e("Parse exception","catched"+e);
+        } catch (java.lang.NullPointerException e){
+            Log.e("Null Pointer java","Prise Adapter "+e);
         }
     }
 

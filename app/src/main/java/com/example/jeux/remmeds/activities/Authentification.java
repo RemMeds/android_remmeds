@@ -49,8 +49,6 @@ public class Authentification extends AppCompatActivity implements View.OnClickL
                     client.get(myURL, new JsonHttpResponseHandler() {
                         @Override
                         public void onSuccess(int statusCode, Header[] header, JSONObject response) {
-                            super.onSuccess(statusCode, header, response);
-                            Toast.makeText(Authentification.this, "Vous êtes connecté", Toast.LENGTH_SHORT).show();
                             try {
                                 String connection = response.getString("connection");
                                 String userID = response.getString("user_id");

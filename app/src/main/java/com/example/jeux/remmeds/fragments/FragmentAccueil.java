@@ -39,7 +39,6 @@ public class FragmentAccueil extends Fragment {
     private static PriseAdapter mAdapter = new PriseAdapter(priseListe);
     private static Context mContext;
 
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -66,7 +65,7 @@ public class FragmentAccueil extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         //you can set the title for your toolbar here for different fragments different titles
         getActivity().setTitle("Accueil");
-        if (priseListe.isEmpty()) {
+        destroyRecyclerAccueil();
             JSONObject data = MainActivity.getDoInBackground("http://212.73.217.202:15020/compartment/list_com/" + MainActivity.getUserID());
             try {
                 final Profil p = new Profil();
@@ -79,41 +78,7 @@ public class FragmentAccueil extends Fragment {
                 Log.e("JsonException", "catched " + e);
                 Toast.makeText(getActivity(), "Erreur de connexion, veuillez re-essayer", Toast.LENGTH_SHORT).show();
             }
-        }
     }
-
-//    private static void checkHistory(Prise prise) {
-//        JSONObject objectHistory;
-//        JSONArray arrayHistorique = null;
-//        Profil p = new Profil();
-//
-//        try {
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
-//            Date currentDay = dateFormat.parse(dateFormat.format(new Date()));
-//            Date endTimeRef = dateFormat.parse(prise.getHeurePrise());
-//            arrayHistorique = historiqueData.getJSONArray("historic");
-//            for (int i = 0; i < arrayHistorique.length(); i++) {
-//                objectHistory = arrayHistorique.getJSONObject(i);
-//                if (prise.getNommedicament().equals(objectHistory.getString("drug_name")) && dateFormat.parse(dateFormat.format(new Date())).equals(currentDay)) {
-//                    if (p.getBreakfastHour().equals(objectHistory.getString("time_slot"))) {
-//                        prise.setIsTaken("1");
-//                    } else if (p.getLunchHour().equals(objectHistory.getString("time_slot"))) {
-//                        prise.setIsTaken("1");
-//                    } else if (p.getDinnerHour().equals(objectHistory.getString("time_slot"))) {
-//                        prise.setIsTaken("1");
-//                    } else if (p.getBedHour().equals(objectHistory.getString("time_slot"))) {
-//                        prise.setIsTaken("1");
-//                    }
-//
-//                }
-//            }
-//        } catch (JSONException e) {
-//            Log.e("JSON EXCEPTION CATCHED", "AccueilCheck" + e);
-//        } catch (ParseException e) {
-//            Log.e("Exception catched", "AccueilCheck" + e);
-//        }
-//    }
-
 
     private void generatePrises(JSONArray compartement, Profil profil) {
         JSONObject objectCompartement;
@@ -136,44 +101,47 @@ public class FragmentAccueil extends Fragment {
                 String[] days = dayperso.split(",");
                 int check = 0;
                 int j = 0;
-                while (j < days.length && check < 1) {
-                    if (days[j].equals(dayname)) {
-                        check = 2;
-                        String[] prefs = listpref.split(",");
-                        for (String pref : prefs) {
-                            switch (pref) {
-                                case "Breakfast":
-                                    Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour(), "0");
-                                    addPrise(prise0);
-                                    break;
-                                case "Lunch":
-                                    Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour(), "0");
-                                    addPrise(prise1);
-                                    break;
-                                case "Dinner":
-                                    Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour(), "0");
-                                    addPrise(prise2);
-                                    break;
-                                case "Bedtime":
-                                    Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour(), "0");
-                                    addPrise(prise3);
-                                    break;
-                                default:
-                                    break;
+                if (!nommedicament.equals("") && !nommedicament.equals("0")) {
+                    do {
+                        if (days[j].equals(dayname) || dayperso.equals("0")) {
+                            check = 2;
+                            String[] prefs = listpref.split(",");
+                            for (String pref : prefs) {
+                                switch (pref) {
+                                    case "Breakfast":
+                                        Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour(), "0");
+                                        addPrise(prise0);
+                                        break;
+                                    case "Lunch":
+                                        Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour(), "0");
+                                        addPrise(prise1);
+                                        break;
+                                    case "Dinner":
+                                        Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour(), "0");
+                                        addPrise(prise2);
+                                        break;
+                                    case "Bedtime":
+                                        Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour(), "0");
+                                        addPrise(prise3);
+                                        break;
+                                    default:
+                                        break;
+                                }
                             }
                         }
+                        j++;
+                    } while (j < days.length && check < 1);
+                    if (!heureperso.equals("") && !heureperso.equals("0")) {
+                        Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso, "0");
+                        addPrise(prise4);
                     }
-                    j++;
                 }
-                if (!heureperso.equals("") && !heureperso.equals("0")) {
-                    Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso, "0");
-                    addPrise(prise4);
+
+                    sortPriseListe();
+                } catch(JSONException e){
+                    Log.e("JSon Null ?", "generatePrise " + e);
                 }
-                sortPriseListe();
-            } catch (JSONException e) {
-                Log.e("JSon Null ?", "generatePrise " + e);
             }
-        }
     }
 
     public static void refreshRecyclerAccueil() {
@@ -202,10 +170,8 @@ public class FragmentAccueil extends Fragment {
     }
 
     public static void destroyRecyclerAccueil() {
-        if (!priseListe.isEmpty()) {
             priseListe.clear();
             refreshRecyclerAccueil();
-        }
     }
 
     private static Date addMinutes(int minutes, Date beforeTime) {

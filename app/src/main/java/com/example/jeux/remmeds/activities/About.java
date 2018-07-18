@@ -14,15 +14,7 @@ public class About extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-
-        ImageView logoabout = findViewById(R.id.logo_ImageView_layout_about);
-        logoabout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(v.getContext(), Refresh.class);
-                startActivity(i);
-            }
-        });
     }
 }
+
 

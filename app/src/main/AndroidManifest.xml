@@ -8,12 +8,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_remmeds"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <receiver android:name=".claases.AlarmReceiver" />
 
         <activity
             android:name=".activities.Authentification"
@@ -31,8 +30,6 @@
         <activity android:name=".activities.Ajoutcontact" />
         <activity android:name=".activities.Setup" />
         <activity android:name=".activities.About" />
-        <activity android:name=".activities.Refresh"
-            android:theme="@style/Theme.AppCompat.Transparent.NoActionBar" />
     </application>
 
 </manifest>

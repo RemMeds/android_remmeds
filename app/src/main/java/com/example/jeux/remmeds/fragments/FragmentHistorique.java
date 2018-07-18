@@ -1,10 +1,8 @@
 package com.example.jeux.remmeds.fragments;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,14 +10,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.jeux.remmeds.R;
 import com.example.jeux.remmeds.activities.MainActivity;
 import com.example.jeux.remmeds.classes.HistoriqueAdapter;
 import com.example.jeux.remmeds.classes.Prise;
-import com.example.jeux.remmeds.classes.PriseAdapter;
-import com.example.jeux.remmeds.classes.Profil;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,11 +25,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.example.jeux.remmeds.fragments.FragmentAccueil.refreshRecyclerAccueil;
-
 public class FragmentHistorique extends Fragment {
     private static List<Prise> priseListe = new ArrayList<>();
-    private static JSONObject historiqueData = MainActivity.getDoInBackground("http://212.73.217.202:15020/historic/list_historic/" + MainActivity.getUserID());
+    private static HistoriqueAdapter mAdapter;
 
     @Nullable
     @Override
@@ -43,14 +36,14 @@ public class FragmentHistorique extends Fragment {
         final View acc = inflater.inflate(R.layout.fragment_historique, container, false);
         RecyclerView mRecyclerView;
         mRecyclerView = acc.findViewById(R.id.evenements_recyclerview_layout_historique);
-        HistoriqueAdapter mAdapter;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mAdapter = new HistoriqueAdapter(priseListe);
         mRecyclerView.setAdapter(mAdapter);
 
         try {
+            JSONObject historiqueData = MainActivity.getDoInBackground("http://212.73.217.202:15020/historic/list_historic/" + MainActivity.getUserID());
             JSONArray array = historiqueData.getJSONArray("historic");
-            generateHistoric(array);
+            refreshRecyclerHistorique();
             if (priseListe.isEmpty()) {
                 generateHistoric(array);
                 mAdapter.notifyDataSetChanged();
@@ -61,17 +54,21 @@ public class FragmentHistorique extends Fragment {
             Log.e("JsonException", "catched " + e);
         }
 
-        try
-        {
+        try {
             mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), LinearLayoutManager.VERTICAL));
         } catch (
-                Exception e)
-        {
+                Exception e) {
             Log.e("mRecyclerView.addDeco", "exception", e);
         }
 
         return acc;
     }
+
+    public static void refreshRecyclerHistorique() {
+        priseListe.clear();
+        mAdapter.notifyDataSetChanged();
+    }
+
 
     private void generateHistoric(JSONArray array) {
         String drugName;
@@ -112,8 +109,6 @@ public class FragmentHistorique extends Fragment {
             }
         });
     }
-
-
 
     private int getPicture(String numComp) {
         int compPicture;

@@ -1,6 +1,10 @@
 package com.example.jeux.remmeds.activities;
 
+import android.app.AlertDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -118,8 +122,6 @@ public class Compartiment extends AppCompatActivity implements View.OnClickListe
             } catch (java.lang.NullPointerException e) {
                 Log.e("Null Intents", "Compartiments" + e);
             }
-
-
         }
     }
 
@@ -141,13 +143,41 @@ public class Compartiment extends AppCompatActivity implements View.OnClickListe
                 optionsfrequenceperso();
                 break;
             case R.id.enregistrer_button_layout_compartiment:
-                saveChanges();
-                FragmentAccueil.destroyRecyclerAccueil();
-                onBackPressed();
+                if(texnommedic.getText().toString().equals("")){
+                    alertDialogDrugNameError();
+                }
+                else{
+                    saveChanges();
+                    FragmentAccueil.destroyRecyclerAccueil();
+                    onBackPressed();
+                }
                 break;
             default:
                 break;
         }
+    }
+
+    private void alertDialogDrugNameError() {
+        //Display an alert dialog for credential error
+        AlertDialog.Builder builder = new AlertDialog.Builder(Compartiment.this);
+        builder.setCancelable(false);
+        builder.setTitle("Aucun nom de médicament");
+        builder.setMessage("Cliquez sur le bouton retour pour annuler vos modifications " +
+                "ou sur le bouton continuer");
+        builder.setNegativeButton("retour", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                onBackPressed();
+            }
+        });
+
+        builder.setPositiveButton("Continuer", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        builder.show();
     }
 
     private void saveChanges() {
