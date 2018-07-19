@@ -34,23 +34,22 @@ public class FragmentProfil extends Fragment {
 
     }
 
-    private void get_formatted_hour(final EditText which_field) {
+    private void getFormattedHour(final EditText whichField) {
         //Launch a time picker instead of keyboard on clock field
-        which_field.setOnClickListener(new View.OnClickListener() {
+        whichField.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Calendar my_current_time = Calendar.getInstance();
-                int hour = my_current_time.get(Calendar.HOUR_OF_DAY);
-                int minute = my_current_time.get(Calendar.MINUTE);
+                Calendar myCurrentTime = Calendar.getInstance();
+                int hour = myCurrentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = myCurrentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog mTimePicker;
                 mTimePicker = new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        DecimalFormat add_zero = new DecimalFormat("00");
-                        which_field.setText(add_zero.format(selectedHour) + ":" + add_zero.format(selectedMinute)); //NOSONAR
+                        DecimalFormat addZero = new DecimalFormat("00");
+                        whichField.setText(addZero.format(selectedHour) + ":" + addZero.format(selectedMinute)); //NOSONAR
                     }
                 }, hour, minute, true);
                 mTimePicker.setTitle("Sélectionner heure");
@@ -79,10 +78,10 @@ public class FragmentProfil extends Fragment {
         final EditText fieldBedtimeProfil = view.findViewById(R.id.bedtime_edittext_layout_profil);
         fieldBedtimeProfil.setText(user.getBedHour());
 
-        get_formatted_hour(fieldBreakfastProfil);
-        get_formatted_hour(fieldLunchProfil);
-        get_formatted_hour(fieldDinnerProfil);
-        get_formatted_hour(fieldBedtimeProfil);
+        getFormattedHour(fieldBreakfastProfil);
+        getFormattedHour(fieldLunchProfil);
+        getFormattedHour(fieldDinnerProfil);
+        getFormattedHour(fieldBedtimeProfil);
 
         Button enregistrerButton = view.findViewById(R.id.enregistrer_button_layout_profil);
         enregistrerButton.setOnClickListener(new View.OnClickListener() {

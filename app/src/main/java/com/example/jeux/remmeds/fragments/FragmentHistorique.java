@@ -134,9 +134,6 @@ public class FragmentHistorique extends Fragment {
             case "7":
                 compPicture = R.drawable.comp7;
                 return compPicture;
-            case "8":
-                compPicture = R.drawable.comp8;
-                return compPicture;
             default:
                 compPicture = R.drawable.comp8;
                 return compPicture;

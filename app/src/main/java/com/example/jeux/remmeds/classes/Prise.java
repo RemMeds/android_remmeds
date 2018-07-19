@@ -8,7 +8,7 @@ public class Prise {
     private String isTaken;
     private String plageHorraire;
 
-    public Prise(String nomMedicament, int compartiment, String heurePrise, String isTaken){
+    public Prise(String nomMedicament, int compartiment, String heurePrise){
         this.nommedicament = nomMedicament;
         this.compartiment = compartiment;
         this.heurePrise = heurePrise;
@@ -31,10 +31,6 @@ public class Prise {
     public String getIsTaken() {
 
         return isTaken;
-    }
-
-    public void setIsTaken(String isTaken) {
-        this.isTaken = isTaken;
     }
 
     public String getDatePrise() {

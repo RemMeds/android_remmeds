@@ -3,8 +3,6 @@ package com.example.jeux.remmeds.activities;
 import android.app.AlertDialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +19,6 @@ import android.widget.ToggleButton;
 import com.example.jeux.remmeds.R;
 import com.example.jeux.remmeds.fragments.FragmentAccueil;
 
-
-import org.json.JSONObject;
-
 import java.text.DecimalFormat;
 import java.util.Calendar;
 
@@ -38,7 +33,6 @@ public class Compartiment extends AppCompatActivity implements View.OnClickListe
     private ToggleButton togvendredi;
     private ToggleButton togsamedi;
     private ToggleButton togdimanche;
-    private Button enregistrer;
     private TextView texnommedic;
     private EditText edinbrheure;
     private EditText nbrduree;
@@ -53,6 +47,7 @@ public class Compartiment extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Button enregistrer;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compartiment);
         swibreakfast = findViewById(R.id.ptitdej_switch_layout_compartiment);

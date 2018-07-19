@@ -1,6 +1,5 @@
 package com.example.jeux.remmeds.classes;
 
-import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 

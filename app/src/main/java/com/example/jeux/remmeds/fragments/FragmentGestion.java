@@ -89,6 +89,7 @@ public class FragmentGestion extends Fragment implements View.OnClickListener {
                     break;
                 case R.id.compartiment8_button_layout_pilulier:
                     putItents(array.getJSONObject(7));
+                    break;
                 default:
                     break;
             }

@@ -24,7 +24,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -96,7 +95,7 @@ public class FragmentAccueil extends Fragment {
                 String listpref = objectCompartement.getString("list_pref");
                 String heureperso = objectCompartement.getString("perso_hour");
                 int compnum = Integer.parseInt(objectCompartement.getString("compartment_num"));
-                int comp[] = {R.drawable.comp1, R.drawable.comp2, R.drawable.comp3, R.drawable.comp4, R.drawable.comp5, R.drawable.comp6, R.drawable.comp7, R.drawable.comp8};
+                int[] comp = {R.drawable.comp1, R.drawable.comp2, R.drawable.comp3, R.drawable.comp4, R.drawable.comp5, R.drawable.comp6, R.drawable.comp7, R.drawable.comp8};
 
                 String[] days = dayperso.split(",");
                 int check = 0;
@@ -109,19 +108,19 @@ public class FragmentAccueil extends Fragment {
                             for (String pref : prefs) {
                                 switch (pref) {
                                     case "Breakfast":
-                                        Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour(), "0");
+                                        Prise prise0 = new Prise(nommedicament, comp[compnum - 1], profil.getBreakfastHour());
                                         addPrise(prise0);
                                         break;
                                     case "Lunch":
-                                        Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour(), "0");
+                                        Prise prise1 = new Prise(nommedicament, comp[compnum - 1], profil.getLunchHour());
                                         addPrise(prise1);
                                         break;
                                     case "Dinner":
-                                        Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour(), "0");
+                                        Prise prise2 = new Prise(nommedicament, comp[compnum - 1], profil.getDinnerHour());
                                         addPrise(prise2);
                                         break;
                                     case "Bedtime":
-                                        Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour(), "0");
+                                        Prise prise3 = new Prise(nommedicament, comp[compnum - 1], profil.getBedHour());
                                         addPrise(prise3);
                                         break;
                                     default:
@@ -132,7 +131,7 @@ public class FragmentAccueil extends Fragment {
                         j++;
                     } while (j < days.length && check < 1);
                     if (!heureperso.equals("") && !heureperso.equals("0")) {
-                        Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso, "0");
+                        Prise prise4 = new Prise(nommedicament, comp[compnum - 1], heureperso);
                         addPrise(prise4);
                     }
                 }
@@ -174,10 +173,4 @@ public class FragmentAccueil extends Fragment {
             refreshRecyclerAccueil();
     }
 
-    private static Date addMinutes(int minutes, Date beforeTime) {
-        final long ONE_MINUTE_IN_MILLIS = 60000;//millisecs
-        long curTimeInMs = beforeTime.getTime();
-        Date afterAddingMins = new Date(curTimeInMs + (minutes * ONE_MINUTE_IN_MILLIS));
-        return afterAddingMins;
-    }
 }

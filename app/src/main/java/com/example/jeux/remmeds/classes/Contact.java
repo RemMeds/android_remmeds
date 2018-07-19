@@ -3,8 +3,6 @@ package com.example.jeux.remmeds.classes;
 
 import android.util.Log;
 
-import com.example.jeux.remmeds.fragments.FragmentRepertoire;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
